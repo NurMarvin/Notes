@@ -1,5 +1,5 @@
 # Notes
-A Powercord plugin that allows you to create notes in Discord. Really something to really take note of.
+A Powercord plugin that allows you to create notes in Discord. Really something to take note of.
 
 ### Commands
 `{yourPowercordPrefix}notes` - Opens the notes modal
