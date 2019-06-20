@@ -4,6 +4,8 @@ const { AsyncComponent } = require('powercord/components')
 const Alert = AsyncComponent.from(getModuleByDisplayName('Alert'))
 const TextArea = require('./TextArea')
 
+const { close: closeModal } = require('powercord/modal')
+
 module.exports = class NoteModal extends React.Component {
   constructor (props) {
     super(props)
@@ -15,10 +17,16 @@ module.exports = class NoteModal extends React.Component {
 
     console.log(props)
 
-    if (props && props.notes) {
-      this.state = {
-        notes: props.notes,
-        error: props.error
+    if (props) {
+      if (props.notes) {
+        this.state = {
+          notes: props.notes
+        }
+      }
+      if (props.error) {
+        this.state = {
+          error: props.error
+        }
       }
     }
   }
@@ -32,16 +40,17 @@ module.exports = class NoteModal extends React.Component {
               rows={15}
               error={this.state.error}
               value={this.state.notes}
-              onChange={v => this.setState({ notes: v })}
+              onChange={v => {
+                this.setState({ notes: v })
+                this.props.save(v)
+              }}
               placeholder='Notes...'
             />
           </div>
         }
         confirmText={'Close'}
         title={'Notes'}
-        onConfirm={() => {
-          this.props.onConfirm(this.state.notes)
-        }}
+        onConfirm={() => {closeModal()}}
       />
     )
   }

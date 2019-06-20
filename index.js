@@ -3,8 +3,6 @@ const { Plugin } = require('powercord/entities')
 const { open: openModal } = require('powercord/modal')
 const fs = require('fs')
 
-const { close: closeModal } = require('powercord/modal')
-
 const NoteModal = require('./components/NoteModal')
 
 var notesFile = __dirname + '/notes.txt'
@@ -29,29 +27,22 @@ module.exports = class Notes extends Plugin {
   }
 
   openNoteModal () {
-    const onConfirm = notes => {
-      closeModal()
-      var err = this.saveNotes(notes)
-
-      if (err) {
-        console.error(err)
-        openModal(() =>
-          React.createElement(NoteModal, {
-            onConfirm: onConfirm,
-            notes: notes,
-            error:
-              'An error occured while saving the notes file. Please look in the console for further information.'
-          })
-        )
-      }
+    const saveNotes = notes => {
+      this.saveNotes(notes)
     }
-
     fs.readFile(notesFile, function read (err, data) {
-      if (err) console.error(err)
+      if (err) {
+        if (err.toString().includes('no such file or directory')) {
+          saveNotes('')
+          err = undefined
+        } else {
+          console.error(err)
+        }
+      }
 
       openModal(() =>
         React.createElement(NoteModal, {
-          onConfirm: onConfirm,
+          save: saveNotes,
           notes: data,
           error: err
             ? 'An error occured while reading the notes file. Please look in the console for further information.'

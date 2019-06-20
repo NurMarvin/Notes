@@ -1,10 +1,14 @@
 # Notes
-A Powercord plugin to save notes. Very cool
+A Powercord plugin that allows you to create notes in Discord. Really something to really take note of.
 
 ### Commands
-`{yourPowercordPrefix}snowflake <snowflakeId>` - Shows you the snowflake information
+`{yourPowercordPrefix}notes` - Opens the notes modal
+
+### Planned features
+- Multiple seperate notes with search function
+- Code Block Support (maybe)
 
 ### Installation
-1. Clone this repository into your Powercord plugins folder using `git clone https://github.com/NurMarvin/SnowflakeInfo.git`
+1. Clone this repository into your Powercord plugins folder using `git clone https://github.com/NurMarvin/Notes.git`
 2. Reload Discord using `Ctrl + R`
 3. You're ready and set!
