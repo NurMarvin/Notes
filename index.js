@@ -8,35 +8,40 @@ const NoteModal = require('./components/NoteModal')
 var notesFile = __dirname + '/notes.txt'
 
 module.exports = class Notes extends Plugin {
-  async startPlugin () {
-    const openNoteModal = () => {
-      return this.openNoteModal()
-    }
-
-    this.registerCommand('notes', [], 'Opens your notes', '{c}', async args => {
-      openNoteModal()
-    })
+  async startPlugin() {
+    powercord.api.commands.registerCommand({
+      command: 'notes',
+      aliases: [],
+      description: 'Opens your notes',
+      usage: '{c}',
+      executor: args => this.openNoteModal()
+    });
   }
 
-  saveNotes (notes) {
+  pluginWillUnload() {
+    powercord.api.commands.unregisterCommand('notes');
+  }
+
+  saveNotes(notes) {
     fs.writeFile(notesFile, notes, function (err) {
       if (err) {
-        return err
+        return err;
       }
-    })
+    });
   }
 
-  openNoteModal () {
+  openNoteModal() {
     const saveNotes = notes => {
       this.saveNotes(notes)
     }
-    fs.readFile(notesFile, function read (err, data) {
+
+    fs.readFile(notesFile, function read(err, data) {
       if (err) {
         if (err.toString().includes('no such file or directory')) {
-          saveNotes('')
-          err = undefined
+          saveNotes('');
+          err = undefined;
         } else {
-          console.error(err)
+          console.error(err);
         }
       }
 
@@ -48,7 +53,7 @@ module.exports = class Notes extends Plugin {
             ? 'An error occured while reading the notes file. Please look in the console for further information.'
             : ''
         })
-      )
-    })
+      );
+    });
   }
 }

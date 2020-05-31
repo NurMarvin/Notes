@@ -5,7 +5,7 @@ A Powercord plugin that allows you to create notes in Discord. Really something 
 `{yourPowercordPrefix}notes` - Opens the notes modal
 
 ### Screenshot
-![Screenshot](https://axolotl.club/gZGsLgwc.png?key=HailTheAxolotl6pIJReo)
+![Screenshot](https://i.imgur.com/OVfYZUy.png)
 
 ### Planned features
 - Multiple seperate notes with search function

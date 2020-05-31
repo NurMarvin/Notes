@@ -1,57 +1,59 @@
-const { getModuleByDisplayName, React } = require('powercord/webpack')
-const { AsyncComponent } = require('powercord/components')
+const {
+  getModuleByDisplayName,
+  React,
+  getModule,
+} = require('powercord/webpack');
+const { AsyncComponent } = require('powercord/components');
+const { FormTitle } = require('powercord/components');
+const { Modal } = require('powercord/components/modal');
+const { close: closeModal } = require('powercord/modal');
 
-const Alert = AsyncComponent.from(getModuleByDisplayName('Alert'))
-const TextArea = require('./TextArea')
+const TextArea = AsyncComponent.from(getModuleByDisplayName('TextArea'));
+const Margin = getModule(['marginBottom20'], false);
 
-const { close: closeModal } = require('powercord/modal')
-
-module.exports = class NoteModal extends React.Component {
-  constructor (props) {
-    super(props)
+module.exports = class NoteModal extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
     this.state = {
       notes: '',
-      error: ''
-    }
-
-    console.log(props)
+      error: '',
+    };
 
     if (props) {
       if (props.notes) {
         this.state = {
-          notes: props.notes
-        }
+          notes: props.notes,
+        };
       }
       if (props.error) {
         this.state = {
-          error: props.error
-        }
+          error: props.error,
+        };
       }
     }
   }
 
-  render () {
+  render() {
     return (
-      <Alert
-        body={
-          <div>
-            <TextArea
-              rows={15}
-              error={this.state.error}
-              value={this.state.notes}
-              onChange={v => {
-                this.setState({ notes: v })
-                this.props.save(v)
-              }}
-              placeholder='Notes...'
-            />
-          </div>
-        }
-        confirmText={'Close'}
-        title={'Notes'}
-        onConfirm={() => {closeModal()}}
-      />
-    )
+      <Modal size={Modal.Sizes.SMALL}>
+        <Modal.Header>
+          <FormTitle tag='h4'>Notes</FormTitle>
+          <Modal.CloseButton onClick={() => closeModal()} />
+        </Modal.Header>
+        <Modal.Content className={Margin.marginBottom20}>
+          <TextArea
+            rows={15}
+            error={this.state.error}
+            value={this.state.notes}
+            onChange={(v) => {
+              this.setState({ notes: v });
+              this.props.save(v);
+            }}
+            placeholder='Notes...'
+          />
+        </Modal.Content>
+      </Modal>
+    );
   }
-}
+};

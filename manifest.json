@@ -1,7 +1,7 @@
 {
     "name": "Notes",
-    "version": "0.0.1",
-    "description": "A Powercord plugin that allows you to create notes in Discord. Really something to really take note of.",
+    "version": "1.0.0",
+    "description": "A Powercord plugin that allows you to create notes in Discord. Really something to take note of.",
     "author": "NurMarvin",
     "license": "UNLICENSE"
   }
